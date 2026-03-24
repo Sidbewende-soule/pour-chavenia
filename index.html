@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -209,7 +209,7 @@
 <div id="adminLogin">
   <h2>Espace Admin</h2>
   <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);">Mot de passe requis</p>
-  <input type="password" id="adminPwdInput" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" onkeydown="if(event.key==='Enter')tryAdminLogin()">
+  <input type="password" id="adminPwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryAdminLogin()">
   <button onclick="tryAdminLogin()">Entrer</button>
   <span class="login-err" id="loginErr"></span>
   <button onclick="closeAdminLogin()" style="background:none;border:1px solid var(--border);color:var(--text-muted);margin-top:0.5rem;">Annuler</button>
@@ -219,45 +219,45 @@
 <div id="adminPanel">
   <div class="admin-inner">
     <div class="admin-topbar">
-      <div class="admin-title">Dashboard Admin ðŸŒ¸</div>
-      <button class="admin-close-btn" onclick="closeAdmin()">Fermer Ã—</button>
+      <div class="admin-title">Dashboard Admin 🌸</div>
+      <button class="admin-close-btn" onclick="closeAdmin()">Fermer ×</button>
     </div>
 
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-val" id="aToday">â€”</div>
+        <div class="stat-val" id="aToday">—</div>
         <div class="stat-lbl">Visites Aujourd'hui</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val" id="aMonth">â€”</div>
+        <div class="stat-val" id="aMonth">—</div>
         <div class="stat-lbl">Visites ce Mois</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val" id="aTotal">â€”</div>
+        <div class="stat-val" id="aTotal">—</div>
         <div class="stat-lbl">Visites Totales</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val" id="aUnlocks">â€”</div>
-        <div class="stat-lbl">DÃ©blocages hors 1er Avril</div>
+        <div class="stat-val" id="aUnlocks">—</div>
+        <div class="stat-lbl">Déblocages hors 1er Avril</div>
       </div>
     </div>
 
     <div class="admin-section">
-      <div class="admin-section-title">DerniÃ¨res consultations (heures)</div>
-      <div class="admin-section-body" id="visitHistory"><div class="empty-msg">Aucune visite enregistrÃ©e.</div></div>
+      <div class="admin-section-title">Dernières consultations (heures)</div>
+      <div class="admin-section-body" id="visitHistory"><div class="empty-msg">Aucune visite enregistrée.</div></div>
     </div>
 
     <div class="admin-section">
-      <div class="admin-section-title">DÃ©blocage manuel (test admin)</div>
+      <div class="admin-section-title">Déblocage manuel (test admin)</div>
       <div class="admin-section-body">
-        <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:1rem;">En tant qu'admin, tu peux dÃ©bloquer directement le message suivant sans passer par le processus de demande.</p>
-        <button class="approve-btn" onclick="adminForceUnlock()" style="padding:0.5rem 1.5rem;font-size:0.72rem;">ðŸ”“ DÃ©bloquer le prochain message maintenant</button>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:1rem;">En tant qu'admin, tu peux débloquer directement le message suivant sans passer par le processus de demande.</p>
+        <button class="approve-btn" onclick="adminForceUnlock()" style="padding:0.5rem 1.5rem;font-size:0.72rem;">🔓 Débloquer le prochain message maintenant</button>
         <div id="adminUnlockMsg" style="margin-top:0.8rem;font-size:0.75rem;color:var(--text-muted);"></div>
       </div>
     </div>
 
     <div class="admin-section">
-      <div class="admin-section-title">Demandes de dÃ©blocage de Chavenia</div>
+      <div class="admin-section-title">Demandes de déblocage de Chavenia</div>
       <div class="admin-section-body" id="requestList"><div class="empty-msg">Aucune demande.</div></div>
     </div>
   </div>
@@ -269,7 +269,7 @@
 <!-- Main site -->
 <div class="container">
   <div class="header">
-    <div class="heart-icon">ðŸŒ¸</div>
+    <div class="heart-icon">🌸</div>
     <div class="to-label">Pour toi,</div>
     <div class="name">Chavenia</div>
   </div>
@@ -280,31 +280,31 @@
   <!-- VIEW 1: Countdown avant le premier 1er avril -->
   <div class="view" id="viewCountdown">
     <div class="countdown-hero" style="opacity:0;animation:fadeUp 0.9s ease forwards 0.3s;">
-      <span class="cd-label">La premiÃ¨re lettre arrive dans</span>
+      <span class="cd-label">La première lettre arrive dans</span>
       <div class="cd-units">
-        <div class="cd-unit"><span class="cd-val" id="cd1d">â€”</span><span class="cd-lbl">Jours</span></div>
-        <div class="cd-sep">Â·</div>
-        <div class="cd-unit"><span class="cd-val" id="cd1h">â€”</span><span class="cd-lbl">Heures</span></div>
-        <div class="cd-sep">Â·</div>
-        <div class="cd-unit"><span class="cd-val" id="cd1m">â€”</span><span class="cd-lbl">Min</span></div>
-        <div class="cd-sep">Â·</div>
-        <div class="cd-unit"><span class="cd-val" id="cd1s">â€”</span><span class="cd-lbl">Sec</span></div>
+        <div class="cd-unit"><span class="cd-val" id="cd1d">—</span><span class="cd-lbl">Jours</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd1h">—</span><span class="cd-lbl">Heures</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd1m">—</span><span class="cd-lbl">Min</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd1s">—</span><span class="cd-lbl">Sec</span></div>
       </div>
-      <p class="teaser-msg">Le 1áµ‰Ê³ avril 2026, quelque chose commence. Quelque chose qui durera cent ans.</p>
+      <p class="teaser-msg">Le 1ᵉʳ avril 2026, quelque chose commence. Quelque chose qui durera cent ans.</p>
     </div>
 
-    <!-- Section dÃ©blocage anticipÃ© (visible aussi avant le 1er avril) -->
+    <!-- Section déblocage anticipé (visible aussi avant le 1er avril) -->
     <div class="unlock-wrap" id="unlockWrapCountdown" style="display:none;">
       <div class="unlock-card">
-        <div class="unlock-title">Lire la premiÃ¨re lettre en avance</div>
+        <div class="unlock-title">Lire la première lettre en avance</div>
         <div class="unlock-sub">Tu veux lire la lettre avant le 1er avril ?</div>
         <div id="uStep1CD">
-          <textarea id="unlockTextareaCD" placeholder="Ã‰cris-moi quelque chose du fond du cÅ“urâ€¦ (minimum 20 mots)" rows="4"></textarea>
+          <textarea id="unlockTextareaCD" placeholder="Écris-moi quelque chose du fond du cœur… (minimum 20 mots)" rows="4"></textarea>
           <div class="word-counter" id="wordCounterCD">0 / 20 mots</div>
           <button class="unlock-btn" id="sendReqBtnCD" onclick="submitUnlockRequestCD()">Envoyer ma demande</button>
         </div>
         <div class="code-entry" id="uStep2CD">
-          <p>Ta demande a Ã©tÃ© envoyÃ©e ! ðŸ’Œ<br>Attends que l'admin te transmette ton code unique.</p>
+          <p>Ta demande a été envoyée ! 💌<br>Attends que l'admin te transmette ton code unique.</p>
           <div class="code-row">
             <input type="text" id="codeInputCD" placeholder="XXXXXX" maxlength="8">
             <button onclick="checkUnlockCodeCD()">Valider</button>
@@ -318,12 +318,12 @@
   <!-- VIEW 2: Lettre du 1er Avril -->
   <div class="view" id="viewLetter">
     <div class="letter-number">
-      <div class="letter-num-val" id="letterNumVal">â€”</div>
-      <div class="letter-num-label">Lettre de l'annÃ©e</div>
+      <div class="letter-num-val" id="letterNumVal">—</div>
+      <div class="letter-num-label">Lettre de l'année</div>
     </div>
     <div class="card">
-      <div class="letter-date" id="letterDate">â€”</div>
-      <div class="letter-body" id="letterBody">Chargementâ€¦</div>
+      <div class="letter-date" id="letterDate">—</div>
+      <div class="letter-body" id="letterBody">Chargement…</div>
       <div class="letter-closing">
         <div class="closing-line"></div>
         <div class="closing-text">Avec tout mon amour</div>
@@ -331,29 +331,29 @@
     </div>
     <div class="progress-wrap">
       <div class="progress-row">
-        <span class="progress-label">100 lettres Â· 100 ans d'amour</span>
-        <span class="progress-label" id="progressPct">â€”</span>
+        <span class="progress-label">100 lettres · 100 ans d'amour</span>
+        <span class="progress-label" id="progressPct">—</span>
       </div>
       <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
       <div class="progress-dots" id="progressDots"></div>
     </div>
   </div>
 
-  <!-- VIEW 3: AprÃ¨s le 2 avril (pÃ©tales + compte Ã  rebours prochain 1er avril) -->
+  <!-- VIEW 3: Après le 2 avril (pétales + compte à rebours prochain 1er avril) -->
   <div class="view" id="viewAfter">
     <div class="petal-screen" style="opacity:0;animation:fadeUp 0.9s ease forwards 0.3s;">
-      <div style="font-size:3rem;margin-bottom:1rem;">ðŸŒ¸</div>
-      <div class="petal-screen-title">La lettre de cette annÃ©e est passÃ©eâ€¦</div>
-      <div class="petal-screen-sub">Prochaine lettre le 1áµ‰Ê³ avril</div>
-      <span class="cd-label">Compte Ã  rebours</span>
+      <div style="font-size:3rem;margin-bottom:1rem;">🌸</div>
+      <div class="petal-screen-title">La lettre de cette année est passée…</div>
+      <div class="petal-screen-sub">Prochaine lettre le 1ᵉʳ avril</div>
+      <span class="cd-label">Compte à rebours</span>
       <div class="cd-units" style="margin-top:0.8rem;">
-        <div class="cd-unit"><span class="cd-val" id="cd2d">â€”</span><span class="cd-lbl">Jours</span></div>
-        <div class="cd-sep">Â·</div>
-        <div class="cd-unit"><span class="cd-val" id="cd2h">â€”</span><span class="cd-lbl">Heures</span></div>
-        <div class="cd-sep">Â·</div>
-        <div class="cd-unit"><span class="cd-val" id="cd2m">â€”</span><span class="cd-lbl">Min</span></div>
-        <div class="cd-sep">Â·</div>
-        <div class="cd-unit"><span class="cd-val" id="cd2s">â€”</span><span class="cd-lbl">Sec</span></div>
+        <div class="cd-unit"><span class="cd-val" id="cd2d">—</span><span class="cd-lbl">Jours</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd2h">—</span><span class="cd-lbl">Heures</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd2m">—</span><span class="cd-lbl">Min</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd2s">—</span><span class="cd-lbl">Sec</span></div>
       </div>
     </div>
 
@@ -364,13 +364,13 @@
         <div class="unlock-sub">Tu veux lire la prochaine lettre maintenant ?</div>
 
         <div id="uStep1">
-          <textarea id="unlockTextarea" placeholder="Ã‰cris-moi quelque chose du fond du cÅ“urâ€¦ (minimum 20 mots)" rows="4"></textarea>
+          <textarea id="unlockTextarea" placeholder="Écris-moi quelque chose du fond du cœur… (minimum 20 mots)" rows="4"></textarea>
           <div class="word-counter" id="wordCounter">0 / 20 mots</div>
           <button class="unlock-btn" id="sendReqBtn" onclick="submitUnlockRequest()">Envoyer ma demande</button>
         </div>
 
         <div class="code-entry" id="uStep2">
-          <p>Ta demande a Ã©tÃ© envoyÃ©e ! ðŸ’Œ<br>Attends que l'admin te transmette ton code unique.</p>
+          <p>Ta demande a été envoyée ! 💌<br>Attends que l'admin te transmette ton code unique.</p>
           <div class="code-row">
             <input type="text" id="codeInput" placeholder="XXXXXX" maxlength="8">
             <button onclick="checkUnlockCode()">Valider</button>
@@ -382,7 +382,7 @@
   </div>
 
   <div class="footer">
-    <span class="footer-text">Renouvellement chaque 1áµ‰Ê³ avril Â· 100 lettres Â· Pour toi, Chavenia</span>
+    <span class="footer-text">Renouvellement chaque 1ᵉʳ avril · 100 lettres · Pour toi, Chavenia</span>
   </div>
 </div>
 
@@ -397,7 +397,7 @@ const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const ADMIN_PASSWORD = 'love2026';
 const FIRST_APRIL    = new Date(Date.UTC(2026, 3, 1, 0, 0, 0));
 
-// Ã‰tat en mÃ©moire (chargÃ© depuis JSONBin au dÃ©marrage)
+// État en mémoire (chargé depuis JSONBin au démarrage)
 let state = { visits: [], unlocks: 0, requests: [], unlocked: null, pending_req: null };
 let saveTimer = null;
 
@@ -427,24 +427,24 @@ function saveState() {
 // LETTRES
 // =============================================
 const LETTRES = [
-  { salutation: "Ma chÃ¨re Chavenia,", paragraphs: ["Je ne sais pas toujours comment te dire les choses avec les mots qu'elles mÃ©ritent. Mais aujourd'hui, en ce jour particulier, je veux que tu saches Ã  quel point ta prÃ©sence dans ma vie est une grÃ¢ce. Tu es celle que j'ai choisie, et je referais ce choix chaque matin sans hÃ©siter une seule seconde.", "Nous avons traversÃ© des moments difficiles â€” des moments oÃ¹ rien n'Ã©tait simple, oÃ¹ il aurait Ã©tÃ© plus facile de lÃ¢cher. Mais nous sommes restÃ©s. Toi, tu es restÃ©e. Et cette dÃ©cision-lÃ , je la porte en moi comme quelque chose de prÃ©cieux que l'on ne casse plus.", "Je te souhaite pour cette nouvelle annÃ©e tout ce que tu mÃ©rites : de la paix, de la joie, et la certitude d'Ãªtre aimÃ©e comme tu l'es. Je suis lÃ , Chavenia, et je ne compte pas partir."] },
-  { salutation: "Chavenia, mon amour,", paragraphs: ["Il y a des personnes que l'on croise et des personnes que l'on reconnaÃ®t. Toi, je t'ai reconnue. Pas immÃ©diatement peut-Ãªtre, mais quelque part dans le temps que nous avons partagÃ©, j'ai compris que tu n'Ã©tais pas quelqu'un qui passait â€” tu Ã©tais quelqu'un qui restait.", "Ce que nous avons vÃ©cu ensemble n'a pas Ã©tÃ© que douceur. Il y a eu des silences lourds, des jours oÃ¹ la distance entre nous semblait plus grande qu'elle ne l'Ã©tait vraiment. Mais Ã  chaque fois, nous avons trouvÃ© le chemin l'un vers l'autre. Ã‡a, Ã§a ne s'oublie pas.", "Merci d'Ãªtre toi. Merci de m'aimer comme tu m'aimes. Cette annÃ©e, je veux Ãªtre encore mieux â€” pour toi, pour nous."] },
-  { salutation: "Ma Chavenia,", paragraphs: ["Je pense parfois Ã  tout ce que nous avons traversÃ© et une seule pensÃ©e s'impose : quelle chance. Quelle chance que nous n'ayons pas abandonnÃ©. Quelle chance que tu sois lÃ . Quelle chance que nous soyons nous.", "L'amour que j'ai pour toi n'est pas nÃ© dans la facilitÃ© â€” il s'est construit dans la vraie vie, avec ses imperfections, ses doutes et ses matins difficiles. Et c'est exactement pour Ã§a qu'il est solide.", "Pour cette nouvelle annÃ©e, je te souhaite de te sentir lÃ©gÃ¨re. LÃ©gÃ¨re de tout ce que tu portes trop souvent seule, et remplie de tout ce que tu mÃ©rites de recevoir."] },
-  { salutation: "ChÃ¨re Chavenia,", paragraphs: ["Si je devais dÃ©crire ce que tu reprÃ©sentes pour moi en quelques mots, je dirais : mon ancre et mon souffle. Tu es ce qui me stabilise quand tout vacille, et en mÃªme temps ce qui me donne envie d'avancer.", "Notre relation a connu des Ã©preuves que peu de gens connaissent. Nous avons dÃ», tous les deux, choisir l'autre dans des moments oÃ¹ rien ne nous y obligeait vraiment. Et ce choix-lÃ  â€” libre, conscient, difficile â€” est la chose dont je suis le plus fier.", "Je t'aime, Chavenia. Pas de faÃ§on parfaite, mais avec tout ce que j'ai."] },
-  { salutation: "Mon amour,", paragraphs: ["Il y a des souvenirs de nous qui me reviennent sans prÃ©venir et qui me font sourire malgrÃ© moi. Un mot que tu as dit, un moment ordinaire transformÃ© en quelque chose de prÃ©cieux simplement parce que tu Ã©tais lÃ .", "Nous avons traversÃ© des turbulences. Nous avons parfois doutÃ©. Mais nous voilÃ  encore lÃ , ensemble, et ce Â« encore Â» a un goÃ»t de victoire douce.", "Pour toi, cette annÃ©e, je souhaite que tous les rÃªves que tu portes en silence trouvent enfin la lumiÃ¨re qu'ils mÃ©ritent."] },
-  { salutation: "Chavenia, ma vie,", paragraphs: ["On dit que l'on connaÃ®t vraiment quelqu'un dans les moments difficiles. Je te connais, alors. Je t'ai vue dans les jours durs, dans les matins sans Ã©lan, et ce que j'ai vu m'a convaincu une fois pour toutes.", "Tu es quelqu'un de remarquable. Non pas parce que tu es parfaite â€” mais parce que tu es authentique. Tu aimes avec sincÃ©ritÃ©. Tu traverses avec courage.", "Merci d'Ãªtre dans ma vie. Cette lettre est pour toi."] },
-  { salutation: "Ma douce Chavenia,", paragraphs: ["Cette lettre, je l'Ã©cris pour que mÃªme quand les mots du quotidien se font rares ou maladroits, tu saches ce que je ressens vraiment. L'amour que j'ai pour toi ne dÃ©pend pas de ma capacitÃ© Ã  bien l'exprimer â€” il est lÃ , constant, solide.", "Nous avons bÃ¢ti quelque chose ensemble. Pas un chÃ¢teau parfait, mais quelque chose de vrai, de vÃ©cu, de nÃ´tre. Aujourd'hui, je le regarde et je suis fier.", "Je te souhaite, cette annÃ©e, de ressentir au fond de toi cette certitude : tu es aimÃ©e, tu es choisie, tu es prÃ©cieuse."] },
-  { salutation: "Chavenia,", paragraphs: ["Il y a quelque chose que je ne te dis peut-Ãªtre pas assez : tu m'as changÃ©. Pas forcÃ©ment de faÃ§on spectaculaire â€” plutÃ´t doucement, profondÃ©ment. Ta faÃ§on d'Ãªtre m'a appris Ã  Ãªtre meilleur.", "Nous ne sommes pas arrivÃ©s lÃ  sans effort. Il y a eu des moments oÃ¹ l'on s'est perdus de vue, des moments de doute. Et pourtant, nous avons recommencÃ©, encore et encore. C'est Ã§a, notre force.", "Pour toi, aujourd'hui, je souhaite de la joie simple. Le genre de joie qui ne fait pas de bruit mais qui remplit tout."] },
-  { salutation: "Ma chÃ¨re Chavenia,", paragraphs: ["Aimer quelqu'un vraiment, ce n'est pas seulement l'aimer dans les beaux jours. C'est aussi le choisir quand les nuages s'installent. Tu m'as aimÃ© comme Ã§a. Et moi, je t'aime comme Ã§a.", "Notre histoire n'est pas linÃ©aire. Elle a des courbes, des creux, des moments d'Ã©lÃ©vation. Mais chaque courbe m'a rapprochÃ© de toi.", "Puisse cette nouvelle annÃ©e t'apporter tout ce que tu mÃ©rites."] },
-  { salutation: "Chavenia, mon amour sincÃ¨re,", paragraphs: ["Je repense souvent au moment oÃ¹ j'ai compris que tu Ã©tais la personne avec qui je voulais construire. Ce n'Ã©tait pas un grand moment dramatique â€” c'Ã©tait un instant ordinaire, et dans cet instant, j'ai su.", "Nous avons traversÃ© des Ã©preuves qui nous ont mis Ã  nu. Et malgrÃ© Ã§a, ou peut-Ãªtre grÃ¢ce Ã  Ã§a, nous sommes devenus plus proches. C'est rare, Chavenia. Ce que nous avons est rare.", "Je t'aime avec tout ce que je suis, et je veux passer encore beaucoup d'annÃ©es Ã  l'apprendre mieux."] }
+  { salutation: "Ma chère Chavenia,", paragraphs: ["Je ne sais pas toujours comment te dire les choses avec les mots qu'elles méritent. Mais aujourd'hui, en ce jour particulier, je veux que tu saches à quel point ta présence dans ma vie est une grâce. Tu es celle que j'ai choisie, et je referais ce choix chaque matin sans hésiter une seule seconde.", "Nous avons traversé des moments difficiles — des moments où rien n'était simple, où il aurait été plus facile de lâcher. Mais nous sommes restés. Toi, tu es restée. Et cette décision-là, je la porte en moi comme quelque chose de précieux que l'on ne casse plus.", "Je te souhaite pour cette nouvelle année tout ce que tu mérites : de la paix, de la joie, et la certitude d'être aimée comme tu l'es. Je suis là, Chavenia, et je ne compte pas partir."] },
+  { salutation: "Chavenia, mon amour,", paragraphs: ["Il y a des personnes que l'on croise et des personnes que l'on reconnaît. Toi, je t'ai reconnue. Pas immédiatement peut-être, mais quelque part dans le temps que nous avons partagé, j'ai compris que tu n'étais pas quelqu'un qui passait — tu étais quelqu'un qui restait.", "Ce que nous avons vécu ensemble n'a pas été que douceur. Il y a eu des silences lourds, des jours où la distance entre nous semblait plus grande qu'elle ne l'était vraiment. Mais à chaque fois, nous avons trouvé le chemin l'un vers l'autre. Ça, ça ne s'oublie pas.", "Merci d'être toi. Merci de m'aimer comme tu m'aimes. Cette année, je veux être encore mieux — pour toi, pour nous."] },
+  { salutation: "Ma Chavenia,", paragraphs: ["Je pense parfois à tout ce que nous avons traversé et une seule pensée s'impose : quelle chance. Quelle chance que nous n'ayons pas abandonné. Quelle chance que tu sois là. Quelle chance que nous soyons nous.", "L'amour que j'ai pour toi n'est pas né dans la facilité — il s'est construit dans la vraie vie, avec ses imperfections, ses doutes et ses matins difficiles. Et c'est exactement pour ça qu'il est solide.", "Pour cette nouvelle année, je te souhaite de te sentir légère. Légère de tout ce que tu portes trop souvent seule, et remplie de tout ce que tu mérites de recevoir."] },
+  { salutation: "Chère Chavenia,", paragraphs: ["Si je devais décrire ce que tu représentes pour moi en quelques mots, je dirais : mon ancre et mon souffle. Tu es ce qui me stabilise quand tout vacille, et en même temps ce qui me donne envie d'avancer.", "Notre relation a connu des épreuves que peu de gens connaissent. Nous avons dû, tous les deux, choisir l'autre dans des moments où rien ne nous y obligeait vraiment. Et ce choix-là — libre, conscient, difficile — est la chose dont je suis le plus fier.", "Je t'aime, Chavenia. Pas de façon parfaite, mais avec tout ce que j'ai."] },
+  { salutation: "Mon amour,", paragraphs: ["Il y a des souvenirs de nous qui me reviennent sans prévenir et qui me font sourire malgré moi. Un mot que tu as dit, un moment ordinaire transformé en quelque chose de précieux simplement parce que tu étais là.", "Nous avons traversé des turbulences. Nous avons parfois douté. Mais nous voilà encore là, ensemble, et ce « encore » a un goût de victoire douce.", "Pour toi, cette année, je souhaite que tous les rêves que tu portes en silence trouvent enfin la lumière qu'ils méritent."] },
+  { salutation: "Chavenia, ma vie,", paragraphs: ["On dit que l'on connaît vraiment quelqu'un dans les moments difficiles. Je te connais, alors. Je t'ai vue dans les jours durs, dans les matins sans élan, et ce que j'ai vu m'a convaincu une fois pour toutes.", "Tu es quelqu'un de remarquable. Non pas parce que tu es parfaite — mais parce que tu es authentique. Tu aimes avec sincérité. Tu traverses avec courage.", "Merci d'être dans ma vie. Cette lettre est pour toi."] },
+  { salutation: "Ma douce Chavenia,", paragraphs: ["Cette lettre, je l'écris pour que même quand les mots du quotidien se font rares ou maladroits, tu saches ce que je ressens vraiment. L'amour que j'ai pour toi ne dépend pas de ma capacité à bien l'exprimer — il est là, constant, solide.", "Nous avons bâti quelque chose ensemble. Pas un château parfait, mais quelque chose de vrai, de vécu, de nôtre. Aujourd'hui, je le regarde et je suis fier.", "Je te souhaite, cette année, de ressentir au fond de toi cette certitude : tu es aimée, tu es choisie, tu es précieuse."] },
+  { salutation: "Chavenia,", paragraphs: ["Il y a quelque chose que je ne te dis peut-être pas assez : tu m'as changé. Pas forcément de façon spectaculaire — plutôt doucement, profondément. Ta façon d'être m'a appris à être meilleur.", "Nous ne sommes pas arrivés là sans effort. Il y a eu des moments où l'on s'est perdus de vue, des moments de doute. Et pourtant, nous avons recommencé, encore et encore. C'est ça, notre force.", "Pour toi, aujourd'hui, je souhaite de la joie simple. Le genre de joie qui ne fait pas de bruit mais qui remplit tout."] },
+  { salutation: "Ma chère Chavenia,", paragraphs: ["Aimer quelqu'un vraiment, ce n'est pas seulement l'aimer dans les beaux jours. C'est aussi le choisir quand les nuages s'installent. Tu m'as aimé comme ça. Et moi, je t'aime comme ça.", "Notre histoire n'est pas linéaire. Elle a des courbes, des creux, des moments d'élévation. Mais chaque courbe m'a rapproché de toi.", "Puisse cette nouvelle année t'apporter tout ce que tu mérites."] },
+  { salutation: "Chavenia, mon amour sincère,", paragraphs: ["Je repense souvent au moment où j'ai compris que tu étais la personne avec qui je voulais construire. Ce n'était pas un grand moment dramatique — c'était un instant ordinaire, et dans cet instant, j'ai su.", "Nous avons traversé des épreuves qui nous ont mis à nu. Et malgré ça, ou peut-être grâce à ça, nous sommes devenus plus proches. C'est rare, Chavenia. Ce que nous avons est rare.", "Je t'aime avec tout ce que je suis, et je veux passer encore beaucoup d'années à l'apprendre mieux."] }
 ];
 for (let i = LETTRES.length; i < 100; i++) {
   LETTRES.push({
     salutation: `Ma Chavenia, lettre ${i+1},`,
     paragraphs: [
-      `Cette ${i+1}áµ‰ lettre arrive avec la mÃªme sincÃ©ritÃ© que la premiÃ¨re. Le temps passe, mais l'essentiel ne change pas â€” tu es la personne que j'ai choisie, et je la choisis encore.`,
-      `Chaque 1áµ‰Ê³ avril est pour moi un rendez-vous sacrÃ©. Un moment oÃ¹ je pose les mots que le quotidien n'accueille pas toujours. Tu mÃ©rites ces mots.`,
-      `Je t'aime, Chavenia. ProfondÃ©ment, durablement, et de mieux en mieux.`
+      `Cette ${i+1}ᵉ lettre arrive avec la même sincérité que la première. Le temps passe, mais l'essentiel ne change pas — tu es la personne que j'ai choisie, et je la choisis encore.`,
+      `Chaque 1ᵉʳ avril est pour moi un rendez-vous sacré. Un moment où je pose les mots que le quotidien n'accueille pas toujours. Tu mérites ces mots.`,
+      `Je t'aime, Chavenia. Profondément, durablement, et de mieux en mieux.`
     ]
   });
 }
@@ -590,7 +590,7 @@ function render() {
 }
 
 // =============================================
-// UNLOCK â€” FORMULAIRES
+// UNLOCK — FORMULAIRES
 // =============================================
 function setupTextarea(taId, wcId, btnId) {
   const ta = document.getElementById(taId);
@@ -640,7 +640,7 @@ function _checkCode(rawCode, msgEl) {
   const req = state.requests.find(r => r.code === entered && r.status === 'approved');
   if (!req) {
     msgEl.className = 'code-msg error';
-    msgEl.textContent = 'Code invalide ou non encore approuvÃ©.';
+    msgEl.textContent = 'Code invalide ou non encore approuvé.';
     return;
   }
   const nextIdx = (getLetterIndex(new Date()) + 1) % 100;
@@ -650,7 +650,7 @@ function _checkCode(rawCode, msgEl) {
   state.unlocks = (state.unlocks || 0) + 1;
   saveState();
   msgEl.className = 'code-msg success';
-  msgEl.textContent = 'Message dÃ©bloquÃ© ! âœ¨';
+  msgEl.textContent = 'Message débloqué ! ✨';
   setTimeout(() => render(), 1200);
 }
 
@@ -695,8 +695,8 @@ function refreshAdmin() {
 
   const lastVisits = state.visits.slice(-30).reverse();
   document.getElementById('visitHistory').innerHTML = lastVisits.length === 0
-    ? '<div class="empty-msg">Aucune visite enregistrÃ©e.</div>'
-    : lastVisits.map(v => `<div class="visit-item"><span class="visit-date">${v.date}</span><span class="visit-time">Ã  ${v.time}</span></div>`).join('');
+    ? '<div class="empty-msg">Aucune visite enregistrée.</div>'
+    : lastVisits.map(v => `<div class="visit-item"><span class="visit-date">${v.date}</span><span class="visit-time">à ${v.time}</span></div>`).join('');
 
   const activeReqs = (state.requests || []).filter(r => r.status !== 'used').reverse();
   document.getElementById('requestList').innerHTML = activeReqs.length === 0
@@ -705,9 +705,9 @@ function refreshAdmin() {
       <div class="req-item">
         <div class="req-text">"${escHtml(r.text)}"</div>
         <div class="req-meta">
-          <span>EnvoyÃ©e le ${r.date}</span>
+          <span>Envoyée le ${r.date}</span>
           <div>${r.status === 'pending'
-            ? `<button class="approve-btn" onclick="approveRequest(${r.id})">Approuver & GÃ©nÃ©rer un code</button>`
+            ? `<button class="approve-btn" onclick="approveRequest(${r.id})">Approuver & Générer un code</button>`
             : `<span class="req-code-badge">${r.code}</span>`
           }</div>
         </div>
@@ -724,7 +724,7 @@ function approveRequest(id) {
   req.status = 'approved';
   req.code = generateCode();
   saveState();
-  alert(`âœ… Code gÃ©nÃ©rÃ© pour Chavenia : ${req.code}\n\nCommunique-lui ce code uniquement.`);
+  alert(`✅ Code généré pour Chavenia : ${req.code}\n\nCommunique-lui ce code uniquement.`);
   refreshAdmin();
 }
 
@@ -737,7 +737,7 @@ function adminForceUnlock() {
   saveState();
   const msgEl = document.getElementById('adminUnlockMsg');
   msgEl.style.color = '#27ae60';
-  msgEl.textContent = `âœ… Lettre nÂ°${nextIdx + 1} dÃ©bloquÃ©e jusqu'au prochain 1er avril.`;
+  msgEl.textContent = `✅ Lettre n°${nextIdx + 1} débloquée jusqu'au prochain 1er avril.`;
   refreshAdmin();
 }
 
