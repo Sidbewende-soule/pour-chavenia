@@ -214,23 +214,14 @@
   }
   @keyframes pulseOp { 0%, 100%{opacity:0.4} 50%{opacity:1} }
   
-  #ytplayer { position: absolute; left: -9999px; width: 1px; height: 1px; }
-
 </style>
-<!-- API YouTube externe -->
-<script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-
-<!-- YouTube Player (Invisible) -->
-<div style="position: absolute; left: -9999px; width: 1px; height: 1px;">
-  <div id="ytplayer"></div>
-</div>
 
 <!-- Entry Overlay -->
 <div id="entryOverlay" onclick="enterSite()">
   <div style="font-size:2rem;margin-bottom:1rem;">🌸</div>
-  <div class="entry-text">Touche l'écran pour commencer</div>
+  <div class="entry-text" id="entryText">Touche l'écran pour commencer</div>
 </div>
 
 <!-- Admin login overlay -->
@@ -779,28 +770,24 @@ function generateCode() {
 // =============================================
 // INIT & MUSIC SETUP
 // =============================================
-let ytPlayer = null;
-
-function onYouTubeIframeAPIReady() {
-  ytPlayer = new YT.Player('ytplayer', {
-    height: '1',
-    width: '1',
-    videoId: 'CNFqVWxmH4A',
-    playerVars: {
-      'autoplay': 0,
-      'controls': 0,
-      'loop': 1,
-      'playlist': 'CNFqVWxmH4A'
-    }
-  });
-}
-
 function enterSite() {
   const overlay = document.getElementById('entryOverlay');
   overlay.style.opacity = '0';
-  if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-    ytPlayer.playVideo();
-  }
+  
+  // Création de l'iframe YouTube au clic (contourne les blocages de sécurité iOS/PC)
+  const introMusic = document.createElement('iframe');
+  introMusic.style.position = 'absolute';
+  introMusic.style.left = '-9999px';
+  introMusic.style.top = '0';
+  introMusic.style.width = '200px';
+  introMusic.style.height = '200px';
+  introMusic.style.opacity = '0.01';
+  introMusic.style.pointerEvents = 'none';
+  introMusic.setAttribute('allow', 'autoplay; encrypted-media');
+  introMusic.src = 'https://www.youtube.com/embed/CNFqVWxmH4A?autoplay=1&controls=0&loop=1&playlist=CNFqVWxmH4A&playsinline=1';
+  
+  document.body.appendChild(introMusic);
+  
   setTimeout(() => { overlay.style.visibility = 'hidden'; }, 1200);
 }
 
