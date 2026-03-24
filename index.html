@@ -215,8 +215,17 @@
   @keyframes pulseOp { 0%, 100%{opacity:0.4} 50%{opacity:1} }
   
 </style>
+
+<!-- API YouTube externe (Nécessaire pour iPhone Safari) -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
 </head>
 <body>
+
+<!-- Lecteur YouTube (Invisible) -->
+<div style="position: absolute; left: -9999px; top: 0; opacity: 0.01; pointer-events: none;">
+  <div id="ytplayer"></div>
+</div>
 
 <!-- Entry Overlay -->
 <div id="entryOverlay" onclick="enterSite()">
@@ -770,23 +779,45 @@ function generateCode() {
 // =============================================
 // INIT & MUSIC SETUP
 // =============================================
+let ytPlayer = null;
+
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('ytplayer', {
+    height: '200',
+    width: '200',
+    videoId: 'CNFqVWxmH4A',
+    playerVars: {
+      'autoplay': 0,
+      'controls': 0,
+      'loop': 1,
+      'playlist': 'CNFqVWxmH4A',
+      'playsinline': 1
+    }
+  });
+}
+
 function enterSite() {
   const overlay = document.getElementById('entryOverlay');
   overlay.style.opacity = '0';
   
-  // Création de l'iframe YouTube au clic (contourne les blocages de sécurité iOS/PC)
-  const introMusic = document.createElement('iframe');
-  introMusic.style.position = 'absolute';
-  introMusic.style.left = '-9999px';
-  introMusic.style.top = '0';
-  introMusic.style.width = '200px';
-  introMusic.style.height = '200px';
-  introMusic.style.opacity = '0.01';
-  introMusic.style.pointerEvents = 'none';
-  introMusic.setAttribute('allow', 'autoplay; encrypted-media');
-  introMusic.src = 'https://www.youtube.com/embed/CNFqVWxmH4A?autoplay=1&controls=0&loop=1&playlist=CNFqVWxmH4A&playsinline=1';
-  
-  document.body.appendChild(introMusic);
+  // 1. Sur un VRAI site (GitHub) : l'iPhone accepte ça uniquement
+  if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+    ytPlayer.playVideo();
+  } 
+  // 2. Fallback pour un fichier local (Mac/PC) 
+  else {
+    const introMusic = document.createElement('iframe');
+    introMusic.style.position = 'absolute';
+    introMusic.style.left = '-9999px';
+    introMusic.style.top = '0';
+    introMusic.style.width = '200px';
+    introMusic.style.height = '200px';
+    introMusic.style.opacity = '0.01';
+    introMusic.style.pointerEvents = 'none';
+    introMusic.setAttribute('allow', 'autoplay; encrypted-media');
+    introMusic.src = 'https://www.youtube.com/embed/CNFqVWxmH4A?autoplay=1&controls=0&loop=1&playlist=CNFqVWxmH4A&playsinline=1';
+    document.body.appendChild(introMusic);
+  }
   
   setTimeout(() => { overlay.style.visibility = 'hidden'; }, 1200);
 }
