@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pour Chavenia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdf8f4;
+    --surface: #ffffff;
+    --border: rgba(180,130,100,0.15);
+    --accent: #b47c5a;
+    --accent-line: rgba(180,124,90,0.35);
+    --text: #2c1f17;
+    --text-muted: rgba(44,31,23,0.45);
+    --rose: #d4826a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 3rem 1.5rem 5rem;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* ===== FALLING PETALS ===== */
+  .petal-fall {
+    position: fixed;
+    top: -40px;
+    pointer-events: none;
+    z-index: 50;
+    animation: petalFall linear forwards;
+  }
+  @keyframes petalFall {
+    0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.8; }
+    50%  { transform: translateY(50vh) rotate(180deg) translateX(20px); opacity: 0.6; }
+    100% { transform: translateY(112vh) rotate(360deg) translateX(-10px); opacity: 0; }
+  }
+
+  /* ===== LAYOUT ===== */
+  .container { position: relative; z-index: 1; width: 100%; max-width: 700px; display: flex; flex-direction: column; align-items: center; }
+
+  /* ===== HEADER ===== */
+  .header { text-align: center; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.9s ease forwards 0.1s; }
+  .heart-icon { display: inline-block; font-size: 1.5rem; margin-bottom: 0.8rem; animation: heartbeat 3s ease-in-out infinite; }
+  @keyframes heartbeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.18)} 28%{transform:scale(1)} 42%{transform:scale(1.1)} 56%{transform:scale(1)} }
+  .to-label { font-size: 0.65rem; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem; }
+  .name { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem,7vw,3.4rem); font-weight: 400; color: var(--accent); letter-spacing: 0.02em; line-height: 1.1; }
+
+  /* ===== DIVIDER ===== */
+  .divider { display: flex; align-items: center; gap: 0.8rem; margin: 0 auto 2.5rem; width: 200px; opacity: 0; animation: fadeUp 0.9s ease forwards 0.2s; }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg,transparent,var(--accent-line)); }
+  .divider-line.r { background: linear-gradient(90deg,var(--accent-line),transparent); }
+  .divider-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
+
+  /* ===== VIEWS ===== */
+  .view { width: 100%; display: none; flex-direction: column; align-items: center; }
+  .view.active { display: flex; }
+
+  /* ===== COUNTDOWN VIEW ===== */
+  .countdown-hero { text-align: center; padding: 3rem 0; }
+  .cd-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem; display: block; }
+  .cd-units { display: flex; gap: 2rem; justify-content: center; margin-bottom: 2rem; }
+  .cd-unit { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+  .cd-val { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem,8vw,4rem); font-weight: 400; color: var(--accent); min-width: 2.5ch; text-align: center; line-height: 1; }
+  .cd-lbl { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+  .cd-sep { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--accent-line); line-height: 1; padding-top: 0.3rem; }
+
+  .teaser-msg { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--text-muted); text-align: center; max-width: 380px; line-height: 1.8; margin-bottom: 2rem; }
+
+  /* ===== PETAL SCREEN (after April 2) ===== */
+  .petal-screen { text-align: center; padding: 2rem 0; }
+  .petal-screen-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem,5vw,2.2rem); color: var(--accent); margin-bottom: 1rem; }
+  .petal-screen-sub { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2.5rem; }
+
+  /* ===== LETTER CARD ===== */
+  .letter-number { opacity: 0; animation: fadeUp 0.9s ease forwards 0.25s; text-align: center; margin-bottom: 1.8rem; }
+  .letter-num-val { font-family: 'Playfair Display', serif; font-size: clamp(3.5rem,10vw,6rem); font-weight: 400; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(180,124,90,0.2); letter-spacing: -0.02em; }
+  .letter-num-label { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.3rem; }
+
+  .card {
+    width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 2px;
+    padding: 3rem 2.5rem; position: relative;
+    box-shadow: 0 3px 30px rgba(180,124,90,0.07), 0 1px 4px rgba(180,124,90,0.04);
+    opacity: 0; animation: fadeUp 0.9s ease forwards 0.35s;
+    overflow-wrap: break-word;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 8%; right: 8%; height: 1px;
+    background: linear-gradient(90deg,transparent,var(--rose),var(--accent),transparent); opacity: 0.45;
+  }
+  .letter-date { text-align: right; font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; }
+  .letter-body { font-family: 'Playfair Display', serif; font-size: clamp(1rem,2.5vw,1.15rem); font-weight: 400; line-height: 1.95; color: var(--text); overflow-wrap: break-word; }
+  .letter-body p { margin-bottom: 1.4em; }
+  .letter-body p:last-child { margin-bottom: 0; }
+  .letter-body .salutation { font-style: italic; font-weight: 500; color: var(--accent); display: block; margin-bottom: 1.6em; font-size: clamp(1.05rem,2.6vw,1.2rem); }
+  .letter-closing { margin-top: 2.5rem; display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; }
+  .closing-line { width: 50px; height: 1px; background: var(--accent-line); margin-bottom: 0.5rem; }
+  .closing-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--text-muted); }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-wrap { width: 100%; margin-top: 2.5rem; opacity: 0; animation: fadeUp 0.9s ease forwards 0.6s; }
+  .progress-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+  .progress-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+  .progress-bar { width: 100%; height: 1px; background: rgba(180,124,90,0.12); position: relative; }
+  .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg,rgba(212,130,106,0.4),var(--accent)); transition: width 0.5s ease; }
+  .progress-dots { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 1rem; }
+  .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(180,124,90,0.12); transition: background 0.3s; }
+  .dot.active { background: var(--rose); }
+  .dot.past { background: rgba(180,124,90,0.3); }
+
+  /* ===== UNLOCK SECTION ===== */
+  .unlock-wrap { width: 100%; margin-top: 2rem; opacity: 0; animation: fadeUp 0.9s ease forwards 0.8s; }
+  .unlock-card { background: white; border: 1px dashed var(--accent-line); border-radius: 4px; padding: 1.8rem; }
+  .unlock-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--accent); text-align: center; margin-bottom: 0.4rem; }
+  .unlock-sub { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-align: center; margin-bottom: 1.2rem; }
+  .unlock-card textarea { width: 100%; padding: 0.8rem; border: 1px solid var(--border); background: var(--bg); font-family: 'Lato', sans-serif; font-size: 0.9rem; resize: vertical; min-height: 90px; outline: none; border-radius: 2px; }
+  .word-counter { font-size: 0.65rem; text-align: right; margin-top: 0.3rem; color: var(--text-muted); transition: color 0.3s; }
+  .word-counter.ok { color: #7aaa6a; }
+  .unlock-btn { display: block; margin: 1rem auto 0; padding: 0.6rem 2.5rem; background: var(--accent); color: white; border: none; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.3s; }
+  .unlock-btn:hover { background: var(--rose); transform: translateY(-1px); }
+  .unlock-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .code-entry { display: none; flex-direction: column; align-items: center; gap: 0.8rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .code-entry p { font-size: 0.75rem; color: var(--text-muted); text-align: center; }
+  .code-row { display: flex; gap: 0.5rem; }
+  .code-row input { width: 140px; padding: 0.6rem; border: 1px solid var(--border); text-align: center; font-family: monospace; font-size: 1rem; letter-spacing: 0.15em; text-transform: uppercase; outline: none; border-radius: 2px; }
+  .code-row button { padding: 0.6rem 1.2rem; background: var(--accent); color: white; border: none; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.3s; }
+  .code-row button:hover { background: var(--rose); }
+  .code-msg { font-size: 0.7rem; text-align: center; padding: 0.4rem; border-radius: 2px; }
+  .code-msg.error { color: #c0392b; background: #fdf3f2; }
+  .code-msg.success { color: #27ae60; background: #f3fdf5; }
+
+  /* ===== FOOTER ===== */
+  .footer { width: 100%; margin-top: 2.8rem; text-align: center; opacity: 0; animation: fadeUp 0.9s ease forwards 1s; }
+  .footer-text { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(44,31,23,0.22); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ===== ADMIN PANEL ===== */
+  #adminPanel {
+    position: fixed; inset: 0; background: var(--bg); z-index: 9000;
+    display: none; overflow-y: auto;
+  }
+  .admin-inner { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+  .admin-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+  .admin-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--accent); }
+  .admin-close-btn { background: none; border: 1px solid var(--border); padding: 0.4rem 1rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; color: var(--text-muted); border-radius: 2px; transition: all 0.3s; }
+  .admin-close-btn:hover { border-color: var(--rose); color: var(--rose); }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card { background: white; border: 1px solid var(--border); padding: 1.2rem; text-align: center; border-radius: 4px; }
+  .stat-val { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--accent); line-height: 1; }
+  .stat-lbl { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.4rem; }
+
+  .admin-section { background: white; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 1.5rem; overflow: hidden; }
+  .admin-section-title { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+  .admin-section-body { padding: 1rem 1.5rem; }
+
+  .visit-item { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(180,124,90,0.06); font-size: 0.8rem; }
+  .visit-item:last-child { border-bottom: none; }
+  .visit-date { color: var(--accent); font-weight: 400; }
+  .visit-time { color: var(--text-muted); }
+
+  .req-item { padding: 1rem 0; border-bottom: 1px solid rgba(180,124,90,0.08); }
+  .req-item:last-child { border-bottom: none; }
+  .req-text { font-style: italic; font-size: 0.85rem; color: var(--text); margin-bottom: 0.5rem; line-height: 1.6; background: var(--bg); padding: 0.6rem 0.8rem; border-radius: 2px; border-left: 2px solid var(--accent-line); }
+  .req-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: var(--text-muted); }
+  .req-code-badge { background: var(--accent); color: white; padding: 0.2rem 0.6rem; border-radius: 2px; font-family: monospace; font-size: 0.75rem; letter-spacing: 0.1em; }
+  .approve-btn { padding: 0.3rem 0.8rem; background: var(--accent); color: white; border: none; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.3s; }
+  .approve-btn:hover { background: var(--rose); }
+
+  .empty-msg { font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 1rem; font-style: italic; }
+
+  /* Admin login overlay */
+  #adminLogin {
+    position: fixed; inset: 0; background: rgba(253,248,244,0.97); z-index: 9100;
+    display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem;
+  }
+  #adminLogin h2 { font-family: 'Playfair Display', serif; color: var(--accent); font-size: 1.4rem; }
+  #adminLogin input { padding: 0.7rem 1rem; border: 1px solid var(--border); width: 240px; text-align: center; font-size: 0.9rem; letter-spacing: 0.1em; outline: none; border-radius: 2px; }
+  #adminLogin button { padding: 0.6rem 2rem; background: var(--accent); color: white; border: none; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.3s; }
+  #adminLogin button:hover { background: var(--rose); }
+  #adminLogin .login-err { font-size: 0.75rem; color: #c0392b; }
+
+  /* Admin trigger (invisible) */
+  #adminTrigger { position: fixed; bottom: 0; right: 0; width: 60px; height: 60px; cursor: default; z-index: 100; opacity: 0; }
+
+  @media (max-width:600px) {
+    .card { padding: 2rem 1.4rem; }
+    .letter-body { font-size: 1rem; line-height: 1.85; }
+    .cd-units { gap: 1rem; }
+    .cd-val { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Admin login overlay -->
+<div id="adminLogin">
+  <h2>Espace Admin</h2>
+  <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);">Mot de passe requis</p>
+  <input type="password" id="adminPwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryAdminLogin()">
+  <button onclick="tryAdminLogin()">Entrer</button>
+  <span class="login-err" id="loginErr"></span>
+  <button onclick="closeAdminLogin()" style="background:none;border:1px solid var(--border);color:var(--text-muted);margin-top:0.5rem;">Annuler</button>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminPanel">
+  <div class="admin-inner">
+    <div class="admin-topbar">
+      <div class="admin-title">Dashboard Admin 🌸</div>
+      <button class="admin-close-btn" onclick="closeAdmin()">Fermer ×</button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-val" id="aToday">—</div>
+        <div class="stat-lbl">Visites Aujourd'hui</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="aMonth">—</div>
+        <div class="stat-lbl">Visites ce Mois</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="aTotal">—</div>
+        <div class="stat-lbl">Visites Totales</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="aUnlocks">—</div>
+        <div class="stat-lbl">Déblocages hors 1er Avril</div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <div class="admin-section-title">Dernières consultations (heures)</div>
+      <div class="admin-section-body" id="visitHistory"><div class="empty-msg">Aucune visite enregistrée.</div></div>
+    </div>
+
+    <div class="admin-section">
+      <div class="admin-section-title">Déblocage manuel (test admin)</div>
+      <div class="admin-section-body">
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:1rem;">En tant qu'admin, tu peux débloquer directement le message suivant sans passer par le processus de demande.</p>
+        <button class="approve-btn" onclick="adminForceUnlock()" style="padding:0.5rem 1.5rem;font-size:0.72rem;">🔓 Débloquer le prochain message maintenant</button>
+        <div id="adminUnlockMsg" style="margin-top:0.8rem;font-size:0.75rem;color:var(--text-muted);"></div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <div class="admin-section-title">Demandes de déblocage de Chavenia</div>
+      <div class="admin-section-body" id="requestList"><div class="empty-msg">Aucune demande.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Invisible admin trigger (bottom-right corner) -->
+<div id="adminTrigger" onclick="handleAdminTrigger()"></div>
+
+<!-- Main site -->
+<div class="container">
+  <div class="header">
+    <div class="heart-icon">🌸</div>
+    <div class="to-label">Pour toi,</div>
+    <div class="name">Chavenia</div>
+  </div>
+  <div class="divider">
+    <div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line r"></div>
+  </div>
+
+  <!-- VIEW 1: Countdown avant le premier 1er avril -->
+  <div class="view" id="viewCountdown">
+    <div class="countdown-hero" style="opacity:0;animation:fadeUp 0.9s ease forwards 0.3s;">
+      <span class="cd-label">La première lettre arrive dans</span>
+      <div class="cd-units">
+        <div class="cd-unit"><span class="cd-val" id="cd1d">—</span><span class="cd-lbl">Jours</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd1h">—</span><span class="cd-lbl">Heures</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd1m">—</span><span class="cd-lbl">Min</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd1s">—</span><span class="cd-lbl">Sec</span></div>
+      </div>
+      <p class="teaser-msg">Le 1ᵉʳ avril 2026, quelque chose commence. Quelque chose qui durera cent ans.</p>
+    </div>
+
+    <!-- Section déblocage anticipé (visible aussi avant le 1er avril) -->
+    <div class="unlock-wrap" id="unlockWrapCountdown" style="display:none;">
+      <div class="unlock-card">
+        <div class="unlock-title">Lire la première lettre en avance</div>
+        <div class="unlock-sub">Tu veux lire la lettre avant le 1er avril ?</div>
+        <div id="uStep1CD">
+          <textarea id="unlockTextareaCD" placeholder="Écris-moi quelque chose du fond du cœur… (minimum 20 mots)" rows="4"></textarea>
+          <div class="word-counter" id="wordCounterCD">0 / 20 mots</div>
+          <button class="unlock-btn" id="sendReqBtnCD" onclick="submitUnlockRequestCD()">Envoyer ma demande</button>
+        </div>
+        <div class="code-entry" id="uStep2CD">
+          <p>Ta demande a été envoyée ! 💌<br>Attends que l'admin te transmette ton code unique.</p>
+          <div class="code-row">
+            <input type="text" id="codeInputCD" placeholder="XXXXXX" maxlength="8">
+            <button onclick="checkUnlockCodeCD()">Valider</button>
+          </div>
+          <div id="codeMsgCD"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 2: Lettre du 1er Avril -->
+  <div class="view" id="viewLetter">
+    <div class="letter-number">
+      <div class="letter-num-val" id="letterNumVal">—</div>
+      <div class="letter-num-label">Lettre de l'année</div>
+    </div>
+    <div class="card">
+      <div class="letter-date" id="letterDate">—</div>
+      <div class="letter-body" id="letterBody">Chargement…</div>
+      <div class="letter-closing">
+        <div class="closing-line"></div>
+        <div class="closing-text">Avec tout mon amour</div>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-row">
+        <span class="progress-label">100 lettres · 100 ans d'amour</span>
+        <span class="progress-label" id="progressPct">—</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-dots" id="progressDots"></div>
+    </div>
+  </div>
+
+  <!-- VIEW 3: Après le 2 avril (pétales + compte à rebours prochain 1er avril) -->
+  <div class="view" id="viewAfter">
+    <div class="petal-screen" style="opacity:0;animation:fadeUp 0.9s ease forwards 0.3s;">
+      <div style="font-size:3rem;margin-bottom:1rem;">🌸</div>
+      <div class="petal-screen-title">La lettre de cette année est passée…</div>
+      <div class="petal-screen-sub">Prochaine lettre le 1ᵉʳ avril</div>
+      <span class="cd-label">Compte à rebours</span>
+      <div class="cd-units" style="margin-top:0.8rem;">
+        <div class="cd-unit"><span class="cd-val" id="cd2d">—</span><span class="cd-lbl">Jours</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd2h">—</span><span class="cd-lbl">Heures</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd2m">—</span><span class="cd-lbl">Min</span></div>
+        <div class="cd-sep">·</div>
+        <div class="cd-unit"><span class="cd-val" id="cd2s">—</span><span class="cd-lbl">Sec</span></div>
+      </div>
+    </div>
+
+    <!-- Unlock section (visible hors 1er avril) -->
+    <div class="unlock-wrap" id="unlockWrap" style="display:none;">
+      <div class="unlock-card">
+        <div class="unlock-title">Lire le prochain message en avance</div>
+        <div class="unlock-sub">Tu veux lire la prochaine lettre maintenant ?</div>
+
+        <div id="uStep1">
+          <textarea id="unlockTextarea" placeholder="Écris-moi quelque chose du fond du cœur… (minimum 20 mots)" rows="4"></textarea>
+          <div class="word-counter" id="wordCounter">0 / 20 mots</div>
+          <button class="unlock-btn" id="sendReqBtn" onclick="submitUnlockRequest()">Envoyer ma demande</button>
+        </div>
+
+        <div class="code-entry" id="uStep2">
+          <p>Ta demande a été envoyée ! 💌<br>Attends que l'admin te transmette ton code unique.</p>
+          <div class="code-row">
+            <input type="text" id="codeInput" placeholder="XXXXXX" maxlength="8">
+            <button onclick="checkUnlockCode()">Valider</button>
+          </div>
+          <div id="codeMsg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="footer-text">Renouvellement chaque 1ᵉʳ avril · 100 lettres · Pour toi, Chavenia</span>
+  </div>
+</div>
+
+<script>
+// =============================================
+// CONFIGURATION
+// =============================================
+const ADMIN_PASSWORD = "love2026";
+const FIRST_APRIL = new Date(Date.UTC(2026, 3, 1, 0, 0, 0)); // 1er avril 2026
+
+// =============================================
+// LETTRES (100 lettres, 1 par an)
+// =============================================
+const LETTRES = [
+  { salutation: "Ma chère Chavenia,", paragraphs: ["Je ne sais pas toujours comment te dire les choses avec les mots qu'elles méritent. Mais aujourd'hui, en ce jour particulier, je veux que tu saches à quel point ta présence dans ma vie est une grâce. Tu es celle que j'ai choisie, et je referais ce choix chaque matin sans hésiter une seule seconde.", "Nous avons traversé des moments difficiles — des moments où rien n'était simple, où il aurait été plus facile de lâcher. Mais nous sommes restés. Toi, tu es restée. Et cette décision-là, je la porte en moi comme quelque chose de précieux que l'on ne casse plus.", "Je te souhaite pour cette nouvelle année tout ce que tu mérites : de la paix, de la joie, et la certitude d'être aimée comme tu l'es. Je suis là, Chavenia, et je ne compte pas partir."] },
+  { salutation: "Chavenia, mon amour,", paragraphs: ["Il y a des personnes que l'on croise et des personnes que l'on reconnaît. Toi, je t'ai reconnue. Pas immédiatement peut-être, mais quelque part dans le temps que nous avons partagé, j'ai compris que tu n'étais pas quelqu'un qui passait — tu étais quelqu'un qui restait.", "Ce que nous avons vécu ensemble n'a pas été que douceur. Il y a eu des silences lourds, des jours où la distance entre nous semblait plus grande qu'elle ne l'était vraiment. Mais à chaque fois, nous avons trouvé le chemin l'un vers l'autre. Ça, ça ne s'oublie pas.", "Merci d'être toi. Merci de m'aimer comme tu m'aimes. Cette année, je veux être encore mieux — pour toi, pour nous."] },
+  { salutation: "Ma Chavenia,", paragraphs: ["Je pense parfois à tout ce que nous avons traversé et une seule pensée s'impose : quelle chance. Quelle chance que nous n'ayons pas abandonné. Quelle chance que tu sois là. Quelle chance que nous soyons nous.", "L'amour que j'ai pour toi n'est pas né dans la facilité — il s'est construit dans la vraie vie, avec ses imperfections, ses doutes et ses matins difficiles. Et c'est exactement pour ça qu'il est solide.", "Pour cette nouvelle année, je te souhaite de te sentir légère. Légère de tout ce que tu portes trop souvent seule, et remplie de tout ce que tu mérites de recevoir."] },
+  { salutation: "Chère Chavenia,", paragraphs: ["Si je devais décrire ce que tu représentes pour moi en quelques mots, je dirais : mon ancre et mon souffle. Tu es ce qui me stabilise quand tout vacille, et en même temps ce qui me donne envie d'avancer.", "Notre relation a connu des épreuves que peu de gens connaissent. Nous avons dû, tous les deux, choisir l'autre dans des moments où rien ne nous y obligeait vraiment. Et ce choix-là — libre, conscient, difficile — est la chose dont je suis le plus fier.", "Je t'aime, Chavenia. Pas de façon parfaite, mais avec tout ce que j'ai."] },
+  { salutation: "Mon amour,", paragraphs: ["Il y a des souvenirs de nous qui me reviennent sans prévenir et qui me font sourire malgré moi. Un mot que tu as dit, un moment ordinaire transformé en quelque chose de précieux simplement parce que tu étais là.", "Nous avons traversé des turbulences. Nous avons parfois douté. Mais nous voilà encore là, ensemble, et ce « encore » a un goût de victoire douce.", "Pour toi, cette année, je souhaite que tous les rêves que tu portes en silence trouvent enfin la lumière qu'ils méritent."] },
+  { salutation: "Chavenia, ma vie,", paragraphs: ["On dit que l'on connaît vraiment quelqu'un dans les moments difficiles. Je te connais, alors. Je t'ai vue dans les jours durs, dans les matins sans élan, et ce que j'ai vu m'a convaincu une fois pour toutes.", "Tu es quelqu'un de remarquable. Non pas parce que tu es parfaite — mais parce que tu es authentique. Tu aimes avec sincérité. Tu traverses avec courage.", "Merci d'être dans ma vie. Cette lettre est pour toi."] },
+  { salutation: "Ma douce Chavenia,", paragraphs: ["Cette lettre, je l'écris pour que même quand les mots du quotidien se font rares ou maladroits, tu saches ce que je ressens vraiment. L'amour que j'ai pour toi ne dépend pas de ma capacité à bien l'exprimer — il est là, constant, solide.", "Nous avons bâti quelque chose ensemble. Pas un château parfait, mais quelque chose de vrai, de vécu, de nôtre. Aujourd'hui, je le regarde et je suis fier.", "Je te souhaite, cette année, de ressentir au fond de toi cette certitude : tu es aimée, tu es choisie, tu es précieuse."] },
+  { salutation: "Chavenia,", paragraphs: ["Il y a quelque chose que je ne te dis peut-être pas assez : tu m'as changé. Pas forcément de façon spectaculaire — plutôt doucement, profondément. Ta façon d'être m'a appris à être meilleur.", "Nous ne sommes pas arrivés là sans effort. Il y a eu des moments où l'on s'est perdus de vue, des moments de doute. Et pourtant, nous avons recommencé, encore et encore. C'est ça, notre force.", "Pour toi, aujourd'hui, je souhaite de la joie simple. Le genre de joie qui ne fait pas de bruit mais qui remplit tout."] },
+  { salutation: "Ma chère Chavenia,", paragraphs: ["Aimer quelqu'un vraiment, ce n'est pas seulement l'aimer dans les beaux jours. C'est aussi le choisir quand les nuages s'installent. Tu m'as aimé comme ça. Et moi, je t'aime comme ça.", "Notre histoire n'est pas linéaire. Elle a des courbes, des creux, des moments d'élévation. Mais chaque courbe m'a rapproché de toi.", "Puisse cette nouvelle année t'apporter tout ce que tu mérites."] },
+  { salutation: "Chavenia, mon amour sincère,", paragraphs: ["Je repense souvent au moment où j'ai compris que tu étais la personne avec qui je voulais construire. Ce n'était pas un grand moment dramatique — c'était un instant ordinaire, et dans cet instant, j'ai su.", "Nous avons traversé des épreuves qui nous ont mis à nu. Et malgré ça, ou peut-être grâce à ça, nous sommes devenus plus proches. C'est rare, Chavenia. Ce que nous avons est rare.", "Je t'aime avec tout ce que je suis, et je veux passer encore beaucoup d'années à l'apprendre mieux."] }
+];
+// Compléter jusqu'à 100 lettres avec des variations
+for (let i = LETTRES.length; i < 100; i++) {
+  LETTRES.push({
+    salutation: `Ma Chavenia, lettre ${i+1},`,
+    paragraphs: [
+      `Cette ${i+1}ᵉ lettre arrive avec la même sincérité que la première. Le temps passe, mais l'essentiel ne change pas — tu es la personne que j'ai choisie, et je la choisis encore.`,
+      `Chaque 1ᵉʳ avril est pour moi un rendez-vous sacré. Un moment où je pose les mots que le quotidien n'accueille pas toujours. Tu mérites ces mots.`,
+      `Je t'aime, Chavenia. Profondément, durablement, et de mieux en mieux.`
+    ]
+  });
+}
+
+// =============================================
+// LOGIQUE DE DATE
+// =============================================
+function getMode(now) {
+  const y = now.getUTCFullYear(), m = now.getUTCMonth(), d = now.getUTCDate();
+  
+  if (now < FIRST_APRIL) return 'countdown';
+  
+  // Est-ce le 1er avril ?
+  if (m === 3 && d === 1) return 'letter';
+  
+  // Après le 2 avril
+  return 'after';
+}
+
+function getLetterIndex(now) {
+  // Compte le nombre de 1ers avril depuis 2026 inclus
+  const y = now.getUTCFullYear();
+  const m = now.getUTCMonth();
+  const d = now.getUTCDate();
+  
+  // Si on est exactement le 1er avril
+  if (m === 3 && d === 1) {
+    return (y - 2026) % 100;
+  }
+  
+  // Sinon la lettre la plus récente passée
+  let lastYear = (m > 3 || (m === 3 && d > 1)) ? y : y - 1;
+  return Math.max(0, (lastYear - 2026) % 100);
+}
+
+function getNextApril1(now) {
+  const y = now.getUTCFullYear();
+  const m = now.getUTCMonth();
+  const d = now.getUTCDate();
+  
+  if (m < 3 || (m === 3 && d === 0)) {
+    return new Date(Date.UTC(y, 3, 1));
+  }
+  return new Date(Date.UTC(y + 1, 3, 1));
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function timeDiff(target, now) {
+  const diff = Math.max(0, target - now);
+  const s = Math.floor(diff / 1000);
+  return {
+    d: Math.floor(s / 86400),
+    h: Math.floor((s % 86400) / 3600),
+    m: Math.floor((s % 3600) / 60),
+    s: s % 60
+  };
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+
+// =============================================
+// STATS & VISITEURS
+// =============================================
+function getStats() {
+  return JSON.parse(localStorage.getItem('ch_stats') || '{"visits":[],"unlocks":0}');
+}
+function saveStats(s) { localStorage.setItem('ch_stats', JSON.stringify(s)); }
+
+function trackVisit() {
+  const s = getStats();
+  const now = new Date();
+  const dateStr = now.toISOString().slice(0, 10);
+  const timeStr = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  
+  const last = s.visits[s.visits.length - 1];
+  if (!last || (Date.now() - new Date(last.ts)) > 60000) {
+    s.visits.push({ date: dateStr, time: timeStr, ts: Date.now() });
+    if (s.visits.length > 1000) s.visits.shift();
+    saveStats(s);
+  }
+}
+
+// =============================================
+// RENDU PRINCIPAL
+// =============================================
+let currentMode = null;
+let petalTimer = null;
+
+function showView(id) {
+  ['viewCountdown', 'viewLetter', 'viewAfter'].forEach(v => {
+    const el = document.getElementById(v);
+    el.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+}
+
+function renderLetterView(now) {
+  // Vérifier si unlock actif
+  const unlockedData = JSON.parse(localStorage.getItem('ch_unlocked') || 'null');
+  let letterIdx = getLetterIndex(now);
+  
+  if (unlockedData && unlockedData.expires > Date.now()) {
+    letterIdx = unlockedData.index;
+  }
+  
+  const lettre = LETTRES[letterIdx] || LETTRES[0];
+  
+  document.getElementById('letterNumVal').textContent = String(letterIdx + 1).padStart(2, '0');
+  document.getElementById('letterDate').textContent = formatDate(new Date(Date.UTC(2026 + letterIdx, 3, 1)));
+  
+  let html = `<span class="salutation">${lettre.salutation}</span>`;
+  lettre.paragraphs.forEach(p => { html += `<p>${p}</p>`; });
+  document.getElementById('letterBody').innerHTML = html;
+  
+  const pct = Math.round(((letterIdx + 1) / 100) * 100);
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+  
+  const dotsEl = document.getElementById('progressDots');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < 100; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === letterIdx ? ' active' : i < letterIdx ? ' past' : '');
+    dotsEl.appendChild(d);
+  }
+}
+
+function startPetals() {
+  if (petalTimer) return;
+  petalTimer = setInterval(spawnPetal, 600);
+}
+
+function stopPetals() {
+  if (petalTimer) { clearInterval(petalTimer); petalTimer = null; }
+}
+
+function spawnPetal() {
+  const p = document.createElement('div');
+  p.className = 'petal-fall';
+  const size = Math.random() * 18 + 8;
+  const colors = ['#ffc0d0', '#ffb0c5', '#ffd0de', '#f9a8c0', '#ffe0ea'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  p.innerHTML = `<svg width="${size}" height="${size*1.3}" viewBox="0 0 20 26" fill="none"><ellipse cx="10" cy="13" rx="9" ry="12" fill="${color}" opacity="0.85"/><ellipse cx="10" cy="13" rx="5" ry="7" fill="white" opacity="0.3"/></svg>`;
+  p.style.left = (Math.random() * 105 - 2) + 'vw';
+  const dur = Math.random() * 4 + 6;
+  p.style.animationDuration = dur + 's';
+  p.style.opacity = 0.5 + Math.random() * 0.4;
+  document.body.appendChild(p);
+  setTimeout(() => p.remove(), dur * 1000 + 500);
+}
+
+function render() {
+  const now = new Date();
+  const mode = getMode(now);
+  
+  if (mode === 'countdown') {
+    stopPetals();
+    showView('viewCountdown');
+    const diff = timeDiff(FIRST_APRIL, now);
+    document.getElementById('cd1d').textContent = diff.d;
+    document.getElementById('cd1h').textContent = pad(diff.h);
+    document.getElementById('cd1m').textContent = pad(diff.m);
+    document.getElementById('cd1s').textContent = pad(diff.s);
+
+    // Section déblocage anticipé
+    const unlocked = JSON.parse(localStorage.getItem('ch_unlocked') || 'null');
+    const wrapCD = document.getElementById('unlockWrapCountdown');
+    if (unlocked && unlocked.expires > Date.now()) {
+      // Déjà débloqué → montrer la lettre
+      showView('viewLetter');
+      renderLetterView(now);
+      wrapCD.style.display = 'none';
+    } else {
+      wrapCD.style.display = 'block';
+      const pendingReq = localStorage.getItem('ch_pending_req');
+      if (pendingReq) {
+        document.getElementById('uStep1CD').style.display = 'none';
+        document.getElementById('uStep2CD').style.display = 'flex';
+      } else {
+        document.getElementById('uStep1CD').style.display = 'block';
+        document.getElementById('uStep2CD').style.display = 'none';
+      }
+    }
+  }
+  else if (mode === 'letter') {
+    stopPetals();
+    showView('viewLetter');
+    renderLetterView(now);
+  }
+  else if (mode === 'after') {
+    startPetals();
+    showView('viewAfter');
+    const nextApril = getNextApril1(now);
+    const diff = timeDiff(nextApril, now);
+    document.getElementById('cd2d').textContent = diff.d;
+    document.getElementById('cd2h').textContent = pad(diff.h);
+    document.getElementById('cd2m').textContent = pad(diff.m);
+    document.getElementById('cd2s').textContent = pad(diff.s);
+    
+    const unlocked = JSON.parse(localStorage.getItem('ch_unlocked') || 'null');
+    const pendingReq = localStorage.getItem('ch_pending_req');
+    const wrap = document.getElementById('unlockWrap');
+
+    if (unlocked && unlocked.expires > Date.now()) {
+      showView('viewLetter');
+      renderLetterView(now);
+      stopPetals();
+      wrap.style.display = 'none';
+    } else {
+      wrap.style.display = 'block';
+      if (pendingReq) {
+        document.getElementById('uStep1').style.display = 'none';
+        document.getElementById('uStep2').style.display = 'flex';
+      } else {
+        document.getElementById('uStep1').style.display = 'block';
+        document.getElementById('uStep2').style.display = 'none';
+      }
+    }
+  }
+}
+
+// =============================================
+// UNLOCK MECHANISM — Vue "after" (après le 2 avril)
+// =============================================
+const textarea = document.getElementById('unlockTextarea');
+textarea.addEventListener('input', () => {
+  const words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+  const wc = document.getElementById('wordCounter');
+  wc.textContent = `${words} / 20 mots`;
+  wc.className = 'word-counter' + (words >= 20 ? ' ok' : '');
+  document.getElementById('sendReqBtn').disabled = words < 20;
+});
+document.getElementById('sendReqBtn').disabled = true;
+
+function buildRequest(text) {
+  const now = new Date();
+  return {
+    id: Date.now(),
+    text: text,
+    date: now.toLocaleString('fr-FR'),
+    nextApril: getNextApril1(now).getTime(),
+    status: 'pending',
+    code: null
+  };
+}
+
+function submitUnlockRequest() {
+  const text = textarea.value.trim();
+  if (text.split(/\s+/).filter(w => w.length > 0).length < 20) return;
+  const req = buildRequest(text);
+  const reqs = JSON.parse(localStorage.getItem('ch_requests') || '[]');
+  reqs.push(req);
+  localStorage.setItem('ch_requests', JSON.stringify(reqs));
+  localStorage.setItem('ch_pending_req', req.id);
+  document.getElementById('uStep1').style.display = 'none';
+  document.getElementById('uStep2').style.display = 'flex';
+}
+
+function checkUnlockCode() {
+  _checkCode(document.getElementById('codeInput').value, document.getElementById('codeMsg'));
+}
+
+// =============================================
+// UNLOCK MECHANISM — Vue "countdown" (avant le 1er avril)
+// =============================================
+const textareaCD = document.getElementById('unlockTextareaCD');
+textareaCD.addEventListener('input', () => {
+  const words = textareaCD.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+  const wc = document.getElementById('wordCounterCD');
+  wc.textContent = `${words} / 20 mots`;
+  wc.className = 'word-counter' + (words >= 20 ? ' ok' : '');
+  document.getElementById('sendReqBtnCD').disabled = words < 20;
+});
+document.getElementById('sendReqBtnCD').disabled = true;
+
+function submitUnlockRequestCD() {
+  const text = textareaCD.value.trim();
+  if (text.split(/\s+/).filter(w => w.length > 0).length < 20) return;
+  const req = buildRequest(text);
+  const reqs = JSON.parse(localStorage.getItem('ch_requests') || '[]');
+  reqs.push(req);
+  localStorage.setItem('ch_requests', JSON.stringify(reqs));
+  localStorage.setItem('ch_pending_req', req.id);
+  document.getElementById('uStep1CD').style.display = 'none';
+  document.getElementById('uStep2CD').style.display = 'flex';
+}
+
+function checkUnlockCodeCD() {
+  _checkCode(document.getElementById('codeInputCD').value, document.getElementById('codeMsgCD'));
+}
+
+// Logique commune de vérification de code
+function _checkCode(rawCode, msgEl) {
+  const entered = rawCode.trim().toUpperCase();
+  const reqs = JSON.parse(localStorage.getItem('ch_requests') || '[]');
+  const req = reqs.find(r => r.code === entered && r.status === 'approved');
+  
+  if (!req) {
+    msgEl.className = 'code-msg error';
+    msgEl.textContent = 'Code invalide ou non encore approuvé.';
+    return;
+  }
+  
+  const now = new Date();
+  const nextIdx = getLetterIndex(now) + 1;
+  const unlockData = { index: nextIdx % 100, expires: req.nextApril };
+  localStorage.setItem('ch_unlocked', JSON.stringify(unlockData));
+  localStorage.removeItem('ch_pending_req');
+  req.status = 'used';
+  localStorage.setItem('ch_requests', JSON.stringify(reqs));
+  const stats = getStats();
+  stats.unlocks = (stats.unlocks || 0) + 1;
+  saveStats(stats);
+  msgEl.className = 'code-msg success';
+  msgEl.textContent = 'Message débloqué ! ✨';
+  setTimeout(() => render(), 1200);
+}
+
+// =============================================
+// ADMIN
+// =============================================
+let adminClickCount = 0;
+let adminClickTimer = null;
+
+function handleAdminTrigger() {
+  adminClickCount++;
+  clearTimeout(adminClickTimer);
+  if (adminClickCount >= 5) {
+    adminClickCount = 0;
+    openAdminLogin();
+  } else {
+    adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2500);
+  }
+}
+
+function openAdminLogin() {
+  document.getElementById('adminLogin').style.display = 'flex';
+  document.getElementById('adminPwdInput').value = '';
+  document.getElementById('loginErr').textContent = '';
+  setTimeout(() => document.getElementById('adminPwdInput').focus(), 100);
+}
+
+function closeAdminLogin() {
+  document.getElementById('adminLogin').style.display = 'none';
+}
+
+function tryAdminLogin() {
+  const pwd = document.getElementById('adminPwdInput').value;
+  if (pwd === ADMIN_PASSWORD) {
+    closeAdminLogin();
+    openAdmin();
+  } else {
+    document.getElementById('loginErr').textContent = 'Mot de passe incorrect.';
+    document.getElementById('adminPwdInput').value = '';
+  }
+}
+
+function openAdmin() {
+  document.getElementById('adminPanel').style.display = 'block';
+  refreshAdmin();
+}
+
+function closeAdmin() {
+  document.getElementById('adminPanel').style.display = 'none';
+}
+
+function refreshAdmin() {
+  const stats = getStats();
+  const now = new Date();
+  const todayStr = now.toISOString().slice(0, 10);
+  const monthStr = todayStr.slice(0, 7);
+  
+  const todayVisits = stats.visits.filter(v => v.date === todayStr).length;
+  const monthVisits = stats.visits.filter(v => v.date.startsWith(monthStr)).length;
+  
+  document.getElementById('aToday').textContent = todayVisits;
+  document.getElementById('aMonth').textContent = monthVisits;
+  document.getElementById('aTotal').textContent = stats.visits.length;
+  document.getElementById('aUnlocks').textContent = stats.unlocks || 0;
+  
+  // Historique des visites
+  const histEl = document.getElementById('visitHistory');
+  const lastVisits = stats.visits.slice(-30).reverse();
+  if (lastVisits.length === 0) {
+    histEl.innerHTML = '<div class="empty-msg">Aucune visite enregistrée.</div>';
+  } else {
+    histEl.innerHTML = lastVisits.map(v => `
+      <div class="visit-item">
+        <span class="visit-date">${v.date}</span>
+        <span class="visit-time">à ${v.time}</span>
+      </div>
+    `).join('');
+  }
+  
+  // Demandes de déblocage
+  const reqs = JSON.parse(localStorage.getItem('ch_requests') || '[]');
+  const activeReqs = reqs.filter(r => r.status !== 'used').reverse();
+  const reqEl = document.getElementById('requestList');
+  
+  if (activeReqs.length === 0) {
+    reqEl.innerHTML = '<div class="empty-msg">Aucune demande en attente.</div>';
+  } else {
+    reqEl.innerHTML = activeReqs.map(r => `
+      <div class="req-item">
+        <div class="req-text">"${escHtml(r.text)}"</div>
+        <div class="req-meta">
+          <span>Envoyée le ${r.date}</span>
+          <div>
+            ${r.status === 'pending'
+              ? `<button class="approve-btn" onclick="approveRequest(${r.id})">Approuver & Générer un code</button>`
+              : `<span class="req-code-badge">${r.code}</span>`
+            }
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function approveRequest(id) {
+  const reqs = JSON.parse(localStorage.getItem('ch_requests') || '[]');
+  const req = reqs.find(r => r.id === id);
+  if (!req) return;
+  req.status = 'approved';
+  req.code = generateCode();
+  localStorage.setItem('ch_requests', JSON.stringify(reqs));
+  // Afficher le code clairement
+  alert(`✅ Code généré pour Chavenia : ${req.code}\n\nCommunique-lui ce code.`);
+  refreshAdmin();
+}
+
+function adminForceUnlock() {
+  // Permet à l'admin de débloquer directement le message suivant (test / cadeau)
+  const now = new Date();
+  const nextIdx = (getLetterIndex(now) + 1) % 100;
+  const nextApril = getNextApril1(now).getTime();
+  const unlockData = { index: nextIdx, expires: nextApril };
+  localStorage.setItem('ch_unlocked', JSON.stringify(unlockData));
+  localStorage.removeItem('ch_pending_req');
+  const stats = getStats();
+  stats.unlocks = (stats.unlocks || 0) + 1;
+  saveStats(stats);
+  const msgEl = document.getElementById('adminUnlockMsg');
+  msgEl.style.color = '#27ae60';
+  msgEl.textContent = `✅ Lettre n°${nextIdx + 1} débloquée jusqu'au prochain 1er avril.`;
+  refreshAdmin();
+}
+
+function generateCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+// =============================================
+// INIT
+// =============================================
+trackVisit();
+render();
+setInterval(render, 1000);
+</script>
+
+</body>
+</html>
