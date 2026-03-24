@@ -201,9 +201,36 @@
     .cd-units { gap: 1rem; }
     .cd-val { font-size: 2.2rem; }
   }
+  
+  /* ===== ENTRY OVERLAY (Music fix) ===== */
+  #entryOverlay {
+    position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; transition: opacity 1.2s ease, visibility 1.2s ease;
+  }
+  .entry-text {
+    font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--accent);
+    letter-spacing: 0.1em; animation: pulseOp 2.5s infinite ease-in-out; text-align: center;
+  }
+  @keyframes pulseOp { 0%, 100%{opacity:0.4} 50%{opacity:1} }
+  
+  #ytplayer { position: absolute; left: -9999px; width: 1px; height: 1px; }
+
 </style>
 </head>
 <body>
+
+<!-- YouTube Player (Invisible) -->
+<iframe id="ytplayer" type="text/html" width="1" height="1" 
+  src="https://www.youtube.com/embed/CNFqVWxmH4A?enablejsapi=1&autoplay=0&controls=0&loop=1&playlist=CNFqVWxmH4A" 
+  frameborder="0" allow="autoplay">
+</iframe>
+
+<!-- Entry Overlay -->
+<div id="entryOverlay" onclick="enterSite()">
+  <div style="font-size:2rem;margin-bottom:1rem;">🌸</div>
+  <div class="entry-text">Touche l'écran pour commencer</div>
+</div>
 
 <!-- Admin login overlay -->
 <div id="adminLogin">
@@ -749,8 +776,15 @@ function generateCode() {
 }
 
 // =============================================
-// INIT
+// INIT & MUSIC SETUP
 // =============================================
+function enterSite() {
+  const overlay = document.getElementById('entryOverlay');
+  overlay.style.opacity = '0';
+  document.getElementById('ytplayer').contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+  setTimeout(() => { overlay.style.visibility = 'hidden'; }, 1200);
+}
+
 async function init() {
   await loadState();
   trackVisit();
