@@ -217,14 +217,15 @@
   #ytplayer { position: absolute; left: -9999px; width: 1px; height: 1px; }
 
 </style>
+<!-- API YouTube externe -->
+<script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
 <!-- YouTube Player (Invisible) -->
-<iframe id="ytplayer" type="text/html" width="1" height="1" 
-  src="https://www.youtube.com/embed/CNFqVWxmH4A?enablejsapi=1&autoplay=0&controls=0&loop=1&playlist=CNFqVWxmH4A" 
-  frameborder="0" allow="autoplay">
-</iframe>
+<div style="position: absolute; left: -9999px; width: 1px; height: 1px;">
+  <div id="ytplayer"></div>
+</div>
 
 <!-- Entry Overlay -->
 <div id="entryOverlay" onclick="enterSite()">
@@ -778,10 +779,28 @@ function generateCode() {
 // =============================================
 // INIT & MUSIC SETUP
 // =============================================
+let ytPlayer = null;
+
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('ytplayer', {
+    height: '1',
+    width: '1',
+    videoId: 'CNFqVWxmH4A',
+    playerVars: {
+      'autoplay': 0,
+      'controls': 0,
+      'loop': 1,
+      'playlist': 'CNFqVWxmH4A'
+    }
+  });
+}
+
 function enterSite() {
   const overlay = document.getElementById('entryOverlay');
   overlay.style.opacity = '0';
-  document.getElementById('ytplayer').contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+  if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+    ytPlayer.playVideo();
+  }
   setTimeout(() => { overlay.style.visibility = 'hidden'; }, 1200);
 }
 
